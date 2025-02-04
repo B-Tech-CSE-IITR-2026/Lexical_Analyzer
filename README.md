@@ -13,7 +13,7 @@ Let's get started with implementing lexical analyzer using flex tool.
 5. Clone the reporsitory using the below git command -
 
    ```
-   git clone https://github.com/anvitgupta01/Compiler_C-to-MIPS/
+   git clone https://github.com/B-Tech-CSE-IITR-2026/Lexical_Analyzer/
    ```
 6. Make a file named "test.c" in the working directory to test the lexical analyzer.
 7. Compile the Lex file using Flex tool as -

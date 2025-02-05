@@ -39,15 +39,19 @@ for set_dir in os.listdir(TEST_DIR):
 
                 print(f"Running {APP_BINARY} on {input_file_path}...")
 
-                # Run lexer and store output
-                with open(output_file_path, "w") as output_file:
-                    try:
+                # Try to run lexer and store output
+                try:
+                    # Open the output file
+                    with open(output_file_path, "w") as output_file:
                         subprocess.run(
-                            [APP_BINARY, input_file_path], stdout=sys.stdout, check=True
+                            [APP_BINARY, input_file_path], stdout=output_file, check=True
                         )
-                    except subprocess.CalledProcessError as e:
-                        print(f"Error running {APP_BINARY} on {input_file_path}: {e}")
-
-                print(f"Output saved to {output_file_path}")
+                    print(f"Output saved to {output_file_path}")
+                except subprocess.CalledProcessError as e:
+                    # If there's an error, print the error message and remove the output file
+                    print(f"Error running lexer on {input_file_path}: {e}")
+                    # Check if the output file was created and remove it
+                    if os.path.isfile(output_file_path):
+                        os.remove(output_file_path)
 
 print("All test cases executed.")

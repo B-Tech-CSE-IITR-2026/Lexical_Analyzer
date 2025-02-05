@@ -16,14 +16,19 @@ Let's get started with implementing lexical analyzer using flex tool.
    git clone https://github.com/B-Tech-CSE-IITR-2026/Lexical_Analyzer/
    ```
 6. Make a file named "test.c" in the working directory to test the lexical analyzer.
-7. Create executable for lexical analysis using the following command-
+7. Install make using the following command in msys2 terminal-
+   ```
+   pacman -S make
+   ```
+8. Create executable for lexical analysis using the following command in CMD or Powershell-
 
    ```
    make
    ```
-8. Run the executable using the command -
+9. Run the following commands in GitBash terminal to execute all the test files in Tests Folder -
 
    ```
-   .\lexer.exe test.c
+   chmod +x run.sh
+   ./run.sh
    ```
 Use the flex manual for learning about flex tool - https://westes.github.io/flex/manual/

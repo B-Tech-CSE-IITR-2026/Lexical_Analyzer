@@ -1,0 +1,53 @@
+#!/bin/python
+
+import os
+import subprocess
+import sys
+
+# Define the test directory
+TEST_DIR = "Tests"
+
+# Ensure test directory exists
+if not os.path.isdir(TEST_DIR):
+    print("Error: Tests directory not found!")
+    exit(1)
+
+APP_NAME = "lexer.exe" if os.name == "nt" else "lexer"
+APP_BINARY = os.path.join(".", APP_NAME)
+
+# Ensure lexer exists
+if not os.path.isfile(os.path.join(".", APP_BINARY)):
+    print("Error: lexer not found!")
+    exit(1)
+
+# Loop through each set (Set 1, Set 2, Set 3)
+for set_dir in os.listdir(TEST_DIR):
+    set_path = os.path.join(TEST_DIR, set_dir)
+    if os.path.isdir(set_path):
+        print(f"Processing {set_path}...")
+
+        # Loop through all `.c` files in the set directory
+        for input_file in os.listdir(set_path):
+            if input_file.endswith(".c"):
+                input_file_path = os.path.join(set_path, input_file)
+
+                # Get the filename without the extension
+                filename = os.path.splitext(input_file)[0]
+
+                # Define output file path
+                output_file_path = os.path.join(set_path, f"{filename}_output.txt")
+
+                print(f"Running {APP_BINARY} on {input_file_path}...")
+
+                # Run lexer and store output
+                with open(output_file_path, "w") as output_file:
+                    try:
+                        subprocess.run(
+                            [APP_BINARY, input_file_path], stdout=sys.stdout, check=True
+                        )
+                    except subprocess.CalledProcessError as e:
+                        print(f"Error running {APP_BINARY} on {input_file_path}: {e}")
+
+                print(f"Output saved to {output_file_path}")
+
+print("All test cases executed.")

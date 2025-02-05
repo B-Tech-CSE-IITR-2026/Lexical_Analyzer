@@ -63,8 +63,15 @@ SINGLE_LINE_COMMENTS "//"[ ]*[^\n]*
 MULTI_LINE_COMMENTS  "/*"([^*]|\*+[^*/])*\*+"/"
 OPEN_MULTI_LINE_COMMENT "/*"
 
+OPEN_NORM_BRACE "("
+CLOSE_NORM_BRACE ")"
+OPEN_CURVE_BRACE "{"
+CLOSE_CURVE_BRACE "}"
+OPEN_SQ_BRACE "["
+CLOSE_SQ_BRACE "]"
+
 PREPROCESSOR_DIRECTIVES #define|#include|#ifdef|#ifndef|#if|#else|#elif|#endif|#undef|#pragma|#line|#error
-PREPROCESSOR_STATEMENTS {PREPROCESSOR_DIRECTIVES}[a-zA-Z<>.]*
+PREPROCESSOR_STATEMENTS {PREPROCESSOR_DIRECTIVES}[^\n]*
 
 HEXA [0-9A-Fa-f]
 BINARY [0-1]
@@ -78,13 +85,6 @@ COLON ":"
 DOT "."
 COMMA ","
 QUESTION_MARK "?"
-
-OPEN_NORM_BRACE "("
-CLOSE_NORM_BRACE ")"
-OPEN_CURVE_BRACE "{"
-CLOSE_CURVE_BRACE "}"
-OPEN_SQ_BRACE "["
-CLOSE_SQ_BRACE "]"
 
 STRING_CHAR [^\"\\]|[\\.]|[ ]
 
@@ -166,7 +166,7 @@ BITWISE_OPERATOR "&"|"|"|"<<"|">>"|"~"|"^"
 }
 
 \"{STRING_CHAR}*\"  {
-    output.push_back(  to_string(line_number) ); output.push_back( "STRING_LITERAL" ); output.push_back( yytext );
+    if (!error) output.push_back(  to_string(line_number) ); output.push_back( "STRING_LITERAL" ); output.push_back( yytext );
 }
 
 \" {
@@ -176,6 +176,11 @@ BITWISE_OPERATOR "&"|"|"|"<<"|">>"|"~"|"^"
 
 \'(.|\\.)\' {
     output.push_back( to_string(line_number) ); output.push_back( "CHARACTER_LITERAL" ); output.push_back( yytext );
+}
+
+\'(.|\\.)*\' {
+    error = 1;
+    cout << "Error: Character Literal can have only one character. Line " << to_string(line_number) << endl;
 }
 
 \' {

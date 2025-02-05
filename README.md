@@ -16,19 +16,14 @@ Let's get started with implementing lexical analyzer using flex tool.
    git clone https://github.com/B-Tech-CSE-IITR-2026/Lexical_Analyzer/
    ```
 6. Make a file named "test.c" in the working directory to test the lexical analyzer.
-7. Compile the Lex file using Flex tool as -
+7. Create executable for lexical analysis using the following command-
 
    ```
-   flex lex.l
+   make
    ```
-8. Compile the lex.yy.c, the lexical analyzer file created by compiling lex.l file as -
+8. Run the executable using the command -
 
    ```
-   g++ lex.yy.c
-   ```
-9. Run the executable using the command -
-
-   ```
-   .\a.exe test.c
+   .\lexer.exe test.c
    ```
 Use the flex manual for learning about flex tool - https://westes.github.io/flex/manual/

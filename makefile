@@ -1,7 +1,7 @@
 LEX = flex
 CXX = g++
 
-LEX_FILE = lex.l
+LEX_FILE = src/lex.l
 LEX_GEN_C = lex.yy.c
 EXECUTABLE = lexer
 
